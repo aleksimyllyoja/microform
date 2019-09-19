@@ -33,7 +33,7 @@ def test_3():
 
     for x in range(0, W):
         v = int(255/127.0*x)
-        image = plot_paths_on_image([[[x, 0], [x, 127]]], image, color=(v,v,v))
+        image = plot_paths_on_image([[[x, 0], [x, 127]]], image, color=v)
 
     show_image(image)
 
@@ -43,7 +43,7 @@ def test_4():
     for i in range(40):
         x = randint(0, 127)
         y = randint(0, 127)
-        image[y, x] = (255, 255, 255)
+        image.putpixel((x, y), 255)
 
     show_image(image)
 
@@ -52,13 +52,13 @@ def test_5():
 
     for y in range(0, 128):
         for x in range((int(400/(y+1))+1)%127, 128, int(400/(y+1))+1):
-            image[y, x] = (255, 255, 255)
+            image.putpixel((x, y), 255)
 
     show_image(image)
 
 if __name__ == '__main__':
     test_1(True)
     test_2(True)
-    #test_3()
-    #test_4()
-    #test_5()
+    test_3()
+    test_4()
+    test_5()

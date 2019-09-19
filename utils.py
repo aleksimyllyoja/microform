@@ -38,25 +38,24 @@ bpns = lambda ps, n=1000: np.array([bernstein(i, len(ps)-1, np.linspace(0.0, 1.0
 bezier = lambda ps, n=1000: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n)))
 objvs = lambda fn: [list(map(float, list(filter(None, l.replace('\n', '').split(' ')))[1:])) for l in open(fn).readlines() if l.startswith('v ')]
 
-def plot_paths(paths, width=W, height=H, scale=5, color='white', show=False):
-    image = Image.new("L", (width, height), 0)
-    img = plot_paths_on_image(paths, image, color)
+def plot_paths(paths, width=W, height=H, scale=5, color=255, show=False):
+    image = create_image(width, height)
+    image = plot_paths_on_image(paths, image, color)
 
     if show: show_image(image, scale)
 
     return image
 
 def create_image(width=W, height=H):
-    img = np.zeros((height, width, 3), np.uint8)
-    img[:,:] = (0, 0, 0)
-    return img
+    image = Image.new("L", (width, height), 0)
+    return image
 
 def show_image(image, scale=5):
     w, h = image.size
     image = image.resize((w*scale, h*scale))
     image.show()
 
-def plot_paths_on_image(paths, image, color=(255, 255, 255), thickness=1):
+def plot_paths_on_image(paths, image, color=255, thickness=1):
     draw = ImageDraw.Draw(image)
     for path in paths:
         for p1, p2 in zip(path, path[1:]):
@@ -64,6 +63,6 @@ def plot_paths_on_image(paths, image, color=(255, 255, 255), thickness=1):
             draw.line([
                 (int(p1[0]), int(p1[1])),
                 (int(p2[0]), int(p2[1]))
-            ], fill = "White", width = 1)
+            ], fill = color, width = 1)
 
     return image
