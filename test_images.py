@@ -14,7 +14,7 @@ def test_1(show=False):
 
     return plot_paths(paths, show=show)
 
-def test_2():
+def test_2(show=False):
     paths = []
 
     paths.append([[0, 0], [127, 0]])
@@ -26,7 +26,7 @@ def test_2():
     paths.append([[0, 0], [127, 127]])
     paths.append([[0, 127], [127, 0]])
 
-    return plot_paths(paths, show=True)
+    return plot_paths(paths, show=show)
 
 def test_3():
     image = create_image()
@@ -57,8 +57,8 @@ def test_5():
     show_image(image)
 
 if __name__ == '__main__':
-    test_1()
-    test_2()
-    test_3()
-    test_4()
-    test_5()
+    test_1(True)
+    test_2(True)
+    #test_3()
+    #test_4()
+    #test_5()
