@@ -2,7 +2,7 @@ from utils import *
 from math import pi
 from random import randint
 
-def test_1():
+def test_1(show=False):
     paths = []
     w = W/8.0
 
@@ -12,7 +12,7 @@ def test_1():
     paths.append(circle(w*2, 90, w*1.2, 4))
     paths.append(circle(w*6, 90, w*1.3, 5, -pi/2.0))
 
-    return plot_paths(paths, show=True)
+    return plot_paths(paths, show=show)
 
 def test_2():
     paths = []
@@ -56,8 +56,9 @@ def test_5():
 
     show_image(image)
 
-test_1()
-test_2()
-test_3()
-test_4()
-test_5()
+if __name__ == '__main__':
+    test_1()
+    test_2()
+    test_3()
+    test_4()
+    test_5()
