@@ -3,6 +3,10 @@ import OLED_Driver
 
 from PIL import Image
 
+from gpiozero import Button
+from signal import pause
+
+
 from test_images import *
 
 def main():
@@ -10,19 +14,17 @@ def main():
 	OLED_ScanDir = OLED_Driver.SCAN_DIR_DFT  #SCAN_DIR_DFT = D2U_L2R
 
 	OLED.OLED_Init(OLED_ScanDir)
-	OLED.OLED_ShowImage(test_1(), 0, 0)
 
-	DEV_Config.Driver_Delay_ms(1000)
-	OLED.OLED_ShowImage(test_2(), 0, 0)
+	def show(t=0):
+		OLED.OLED_Clear()
+		OLED.OLED_ShowImage(test_1(), 0, 0)
+		DEV_Config.Driver_Delay_ms(t)
+		OLED.OLED_Clear()
 
-	DEV_Config.Driver_Delay_ms(1000)
-	OLED.OLED_ShowImage(test_3(), 0, 0)
+	button = Button(4)
+	button.when_pressed = show
 
-	DEV_Config.Driver_Delay_ms(1000)
-	OLED.OLED_ShowImage(test_4(), 0, 0)
-
-	DEV_Config.Driver_Delay_ms(1000)
-	OLED.OLED_ShowImage(test_5(), 0, 0)
+	pause()
 
 if __name__ == '__main__':
 	main()
