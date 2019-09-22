@@ -1,25 +1,23 @@
-import DEV_Config
-import OLED_Driver
+#!/usr/bin/env python3
 
-from PIL import Image
-
+from importlib import reload
 from gpiozero import Button
 from signal import pause
 
-
 from test_images import *
 
+import subprocess
+
+import settings
+
 def main():
-	OLED = OLED_Driver.OLED()
-	OLED_ScanDir = OLED_Driver.SCAN_DIR_DFT  #SCAN_DIR_DFT = D2U_L2R
-
-	OLED.OLED_Init(OLED_ScanDir)
-
 	def show(t=0):
-		OLED.OLED_Clear()
-		OLED.OLED_ShowImage(test_1(), 0, 0)
-		DEV_Config.Driver_Delay_ms(t)
-		OLED.OLED_Clear()
+		reload(settings)
+		out = subprocess.run(
+			['expono', settings.file, '-e', str(settings.exposure)],
+			capture_output=True
+		)
+		print(out.stdout.decode('ascii'))
 
 	button = Button(4)
 	button.when_pressed = show
