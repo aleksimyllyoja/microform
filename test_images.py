@@ -2,6 +2,12 @@ from utils import *
 from math import pi
 from random import randint
 
+tests = []
+def d_(f):
+    tests.append(f)
+    return f
+
+@d_
 def test_1(show=False):
     paths = []
     w = W/8.0
@@ -14,6 +20,7 @@ def test_1(show=False):
 
     return plot_paths(paths, show=show)
 
+@d_
 def test_2(show=False):
     paths = []
 
@@ -28,16 +35,21 @@ def test_2(show=False):
 
     return plot_paths(paths, show=show)
 
+@d_
 def test_3(show=False):
     image = create_image()
 
-    for x in range(0, W):
-        v = int(255/127.0*x)
-        image = plot_paths_on_image([[[x, 0], [x, 127]]], image, color=v)
+    for x in range(0, randint(2, 10)):
+        x0 = randint(0, 127)
+        y0 = randint(0, 127)
+        x1 = randint(0, 127)
+        y1 = randint(0, 127)
+        image = plot_paths_on_image([[[x0, y0], [x1, y1]]], image)
 
     if show: show_image(image)
     return image
 
+@d_
 def test_4(show=False):
     image = create_image()
 
@@ -49,6 +61,7 @@ def test_4(show=False):
     if show: show_image(image)
     return image
 
+@d_
 def test_5(show=False):
     image = create_image()
 
@@ -59,9 +72,34 @@ def test_5(show=False):
     if show: show_image(image)
     return image
 
+#@d_
+def test_6(show=False):
+    image = create_image()
+    draw = ImageDraw.Draw(image)
+    draw.ellipse((0, 0, 127, 127), fill='white')
+    return image
+
+
+def load_img(filename, show=False):
+    return Image.open('src/'+filename).convert('L')
+
+@d_
+def face(): return load_img('face.png')
+
+@d_
+def plant(): return load_img('plant.png')
+
+@d_
+def plant2(): return load_img('plant2.png')
+
+def dump():
+    import json
+    t = lambda x: int(x/16.0)
+
+    for tf in tests:
+        print(tf.__name__)
+        l = map(lambda xs: list(map(t, xs)), np.array(tf()).tolist())
+        json.dump(list(l), open('jsons/'+tf.__name__+'.json', 'w'))
+
 if __name__ == '__main__':
-    test_1(True)
-    test_2(True)
-    test_3(True)
-    test_4(True)
-    test_5(True)
+    dump()

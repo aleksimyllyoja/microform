@@ -8,13 +8,13 @@ from test_images import *
 
 import subprocess
 
-import settings
+import patch
 
 def main():
 	def show(t=0):
-		reload(settings)
+		reload(patch)
 		out = subprocess.run(
-			['expono', settings.file, '-e', str(settings.exposure)],
+			['expono', patch.file, '-e', str(patch.exposure)],
 			capture_output=True
 		)
 		print(out.stdout.decode('ascii'))
