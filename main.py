@@ -4,8 +4,9 @@ from importlib import reload
 from gpiozero import Button
 from signal import pause
 
-import subprocess
+import numpy as np
 
+import subprocess
 import patch
 
 def main():
@@ -13,7 +14,7 @@ def main():
 		reload(patch)
 
 		# TODO
-		l = map(lambda xs: list(map(t, xs)), np.array(patch.source().tolist()))
+		l = map(lambda xs: list(map(t, xs)), np.array(patch.source()).tolist())
 		json.dump(list(l), open('source.json', 'w'))
 
 		out = subprocess.run(
