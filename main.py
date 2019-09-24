@@ -13,8 +13,8 @@ def main():
 		reload(patch)
 
 		# TODO
-		l = map(lambda xs: list(map(t, xs)), np.array(patch.source().tolist())
-        json.dump(list(l), open('source.json', 'w'))
+		l = map(lambda xs: list(map(t, xs)), np.array(patch.source().tolist()))
+		json.dump(list(l), open('source.json', 'w'))
 
 		out = subprocess.run(
 			['expono', 'source.json', '-e', str(patch.exposure)],
