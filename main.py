@@ -9,12 +9,14 @@ import numpy as np
 import subprocess
 import patch
 
+import json
+
 def main():
 	def show(t=0):
 		reload(patch)
 
 		# TODO
-		l = map(lambda xs: list(map(t, xs)), np.array(patch.source()).tolist())
+		l = map(lambda xs: list(map(lambda x: int(x/16.0), xs)), np.array(patch.source()).tolist())
 		json.dump(list(l), open('source.json', 'w'))
 
 		out = subprocess.run(
