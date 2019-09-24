@@ -4,8 +4,6 @@ from importlib import reload
 from gpiozero import Button
 from signal import pause
 
-from test_images import *
-
 import subprocess
 
 import patch
@@ -13,8 +11,13 @@ import patch
 def main():
 	def show(t=0):
 		reload(patch)
+
+		# TODO
+		l = map(lambda xs: list(map(t, xs)), np.array(patch.source().tolist())
+        json.dump(list(l), open('source.json', 'w'))
+
 		out = subprocess.run(
-			['expono', patch.file, '-e', str(patch.exposure)],
+			['expono', 'source.json', '-e', str(patch.exposure)],
 			capture_output=True
 		)
 		print(out.stdout.decode('ascii'))

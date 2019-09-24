@@ -1,16 +1,15 @@
 from random import sample
-from test_images import *
+from images import *
 import os
 
-#dump()
+def filter_images(ls):
+    return list(filter(lambda x: x.__name__ in ls, IMAGES))
+
+def sample_from(ls):
+    return sample(filter_images(ls), 1)[0]
 
 exposure=0.1*10**6
 
-#random_file = "jsons/"+sample(os.listdir('jsons'), 1)[0]
+plants = ['plant', 'plant3', 'plant4', 'plant5', 'plant6']
 
-random_plant = "jsons/"+sample(['plant2.json', 'plant.json'], 1)[0]
-
-#dump()
-file = random_plant
-#file='jsons/plant2.json'
-#file=random_file
+source = sample_from(plants)
