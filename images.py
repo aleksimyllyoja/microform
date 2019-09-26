@@ -2,8 +2,10 @@
 
 from utils import *
 from math import pi, sqrt, ceil
-from random import randint
+from random import randint, choice
+
 import argparse
+import string
 
 IMAGES = []
 def d_(f):
@@ -14,7 +16,7 @@ def load_img(filename, show=False):
     return Image.open('src/'+filename).convert('L')
 
 @d_
-def test_1(show=False):
+def test_1():
     paths = []
     w = W/8.0
 
@@ -27,7 +29,7 @@ def test_1(show=False):
     return plot_paths(paths, show=show)
 
 @d_
-def test_2(show=False):
+def test_2():
     paths = []
 
     paths.append([[0, 0], [127, 0]])
@@ -39,10 +41,10 @@ def test_2(show=False):
     paths.append([[0, 0], [127, 127]])
     paths.append([[0, 127], [127, 0]])
 
-    return plot_paths(paths, show=show)
+    return plot_paths(paths)
 
 @d_
-def test_3(show=False):
+def test_3():
     image = create_image()
 
     for x in range(0, randint(2, 10)):
@@ -52,11 +54,10 @@ def test_3(show=False):
         y1 = randint(0, 127)
         image = plot_paths_on_image([[[x0, y0], [x1, y1]]], image)
 
-    if show: show_image(image)
     return image
 
 @d_
-def test_4(show=False):
+def test_4():
     image = create_image()
 
     for i in range(40):
@@ -64,14 +65,31 @@ def test_4(show=False):
         y = randint(0, 127)
         image.putpixel((x, y), 255)
 
-    if show: show_image(image)
     return image
 
 @d_
-def test_6(show=False):
+def test_6():
     image = create_image()
     draw = ImageDraw.Draw(image)
     draw.ellipse((0, 0, 127, 127), outline='white')
+    return image
+
+@d_
+def text():
+    image = create_image().convert("RGB")
+    draw = ImageDraw.Draw(image)
+    fnt = ImageFont.truetype('fonts/Misto.ttf', 55)
+
+    xs = "#$€%&!/\\?+_-–"+string.ascii_lowercase+string.ascii_uppercase
+    s = choice(xs)+choice(xs)+"\n"+choice(xs)+choice(xs)
+
+    draw.text((0, 0), s, font=fnt, fill=(255, 255, 255, 128))
+    return image.convert("L")
+
+def white_circle():
+    image = create_image()
+    draw = ImageDraw.Draw(image)
+    draw.ellipse((0, 0, 127, 127), fill='white')
     return image
 
 @d_
@@ -108,5 +126,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.dump: dump()
     if args.show: show()

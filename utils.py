@@ -1,5 +1,5 @@
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import itertools
 
 try:  # SciPy >= 0.19
@@ -38,11 +38,9 @@ bpns = lambda ps, n=1000: np.array([bernstein(i, len(ps)-1, np.linspace(0.0, 1.0
 bezier = lambda ps, n=1000: mt2(zip(np.array([p[0] for p in ps])@bpns(ps, n), np.array([p[1] for p in ps])@bpns(ps,n)))
 objvs = lambda fn: [list(map(float, list(filter(None, l.replace('\n', '').split(' ')))[1:])) for l in open(fn).readlines() if l.startswith('v ')]
 
-def plot_paths(paths, width=W, height=H, scale=5, color=255, show=False):
+def plot_paths(paths, width=W, height=H, scale=5, color=255):
     image = create_image(width, height)
     image = plot_paths_on_image(paths, image, color)
-
-    if show: show_image(image, scale)
 
     return image
 
