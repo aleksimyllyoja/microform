@@ -53,6 +53,19 @@ def show_image(image, scale=5):
     image = image.resize((w*scale, h*scale))
     image.show()
 
+def show_many(ls):
+    h = round(sqrt(len(ls)))
+    w = ceil(len(ls)/h)
+
+    img = Image.new('L', (h*128, h*128))
+    i=0
+    for x in range(h):
+        for y in range(w):
+            if i<len(ls):
+                img.paste(ls[i](), (x*128, y*128))
+                i+=1
+    img.show()
+
 def plot_paths_on_image(paths, image, color=255, thickness=1):
     draw = ImageDraw.Draw(image)
     for path in paths:

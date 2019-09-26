@@ -6,6 +6,8 @@ from random import randint, choice
 
 import argparse
 import string
+from simulacrum import r
+
 
 IMAGES = []
 def d_(f):
@@ -14,6 +16,9 @@ def d_(f):
 
 def load_img(filename, show=False):
     return Image.open('src/'+filename).convert('L')
+
+@d_
+def simu(): return r()
 
 @d_
 def test_1():
@@ -26,7 +31,7 @@ def test_1():
     paths.append(circle(w*2, 90, w*1.2, 4))
     paths.append(circle(w*6, 90, w*1.3, 5, -pi/2.0))
 
-    return plot_paths(paths, show=show)
+    return plot_paths(paths)
 
 @d_
 def test_2():
@@ -107,18 +112,7 @@ def plant5(): return load_img('plant5.png')
 @d_
 def plant6(): return load_img('plant6.png')
 
-def show():
-    h = round(sqrt(len(IMAGES)))
-    w = ceil(len(IMAGES)/h)
-
-    img = Image.new('L', (h*128, h*128))
-    i=0
-    for x in range(h):
-        for y in range(w):
-            i+=1
-            if i<len(IMAGES):
-                img.paste(IMAGES[i](), (x*128, y*128))
-    img.show()
+def show(): show_many(IMAGES)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
